@@ -8,17 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace TicTacToe
 {
     public partial class frmGato : Form
     {
-        bool turno; // verdadero = si es el turno de la x
+        bool turno = false; // verdadero = si es el turno de la x
                     // falso = si es el tueno de la y
         int cont_turno = 0;
+
+        static String player1, player2;
 
         public frmGato()
         {
             InitializeComponent();
+        }
+
+        public static void setPlayersName(String n1, String n2)
+        {
+            player1 = n1;
+            player2 = n2;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -125,12 +134,12 @@ namespace TicTacToe
                 String winner = "";
                 if (turno)
                 {
-                    winner = "O";
+                    winner = player1;
                     o_win_count.Text = (Int32.Parse(o_win_count.Text) + 1).ToString();
                 }
                 else
                 {
-                    winner = "X";
+                    winner = player2;
                     x_win_count.Text = (Int32.Parse(x_win_count.Text) + 1).ToString();
                 }
 
@@ -138,7 +147,7 @@ namespace TicTacToe
             }
             else
             {
-                if (cont_turno == 10)
+                if (cont_turno == 9)
                 {
                     MessageBox.Show("Empate", "Bummer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     draw_count.Text = (Int32.Parse(draw_count.Text) + 1).ToString();
@@ -184,7 +193,12 @@ namespace TicTacToe
 
         private void frmGato_Load(object sender, EventArgs e)
         {
-            turno = false;
+            
+            frmJugadores f2 = new frmJugadores();
+            f2.ShowDialog();
+            label1.Text = player1;
+            label3.Text = player2;
+
         }
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
